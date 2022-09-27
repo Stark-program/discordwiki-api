@@ -155,8 +155,9 @@ app.post("/opengraph", async (req: { body: { url: string } }, res) => {
   });
 });
 
+const PORT = process.env.PORT || 5000;
 export function expressServer() {
-  app.listen(3000, API_ENDPOINT, () => {
-    console.log("api server listening on port 3000");
+  app.listen(PORT, () => {
+    console.log("api server listening on port " + PORT);
   });
 }
