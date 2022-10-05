@@ -25,7 +25,7 @@ model Channel {
 
 model Message {
   id                String   @id
-  timestamp         Int
+  timestamp         BigInt
   guildChannelId    String
   username          String
   userAvatar        String
