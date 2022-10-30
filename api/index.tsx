@@ -117,7 +117,11 @@ app.get("/guilds/:guildId/:channelId", async (req, res) => {
       ) {
         res.send("No messages found in channel");
       } else {
-        res.send(data.channels[0].messages);
+        let messages = JSON.stringify(
+          data.channels[0].messages,
+          (key, value) => (typeof value === "bigint" ? value.toString() : value) // return everything else unchanged
+        );
+        res.send(messages);
       }
     }
   );
