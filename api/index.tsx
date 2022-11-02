@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import express from "express";
+import { PermissionsBitField } from "discord.js";
 var cors = require("cors");
 const ogs = require("open-graph-scraper");
 const prisma = new PrismaClient();
@@ -157,6 +158,21 @@ app.post("/opengraph", async (req: { body: { url: string } }, res) => {
       res.send(results);
     }
   });
+});
+
+app.post("/admincheck", async (req, res) => {
+  let guilds = req.body;
+  console.log(guilds);
+  let guildsUserIsAdminIn = [];
+  for (let i = 0; i < guilds.length; i++) {
+    let permissionNumber = guilds[i].permissions;
+    let permissions = new PermissionsBitField(BigInt(permissionNumber));
+    if (permissions.has(PermissionsBitField.Flags.Administrator)) {
+      guildsUserIsAdminIn.push(guilds[i]);
+    }
+  }
+  res.send(guildsUserIsAdminIn);
+  console.log(guildsUserIsAdminIn);
 });
 
 const PORT = process.env.PORT || 5000;
